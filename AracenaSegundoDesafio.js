@@ -1,5 +1,4 @@
 const fs = require('fs');
-// const { readFile, writeFile } = require('fs/promises');
 const osPath = require('path');
 const dbFile = 'db.json';
 
