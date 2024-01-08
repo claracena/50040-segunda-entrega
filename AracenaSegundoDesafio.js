@@ -26,7 +26,7 @@ class ProductManager {
 
         const readProducts = fs.readFileSync(osPath.join(this.path, this.file), 'utf-8');
         this.products = JSON.parse(readProducts);
-        this.currentId = Object.keys(this.products).length + 1;
+        this.currentId = Object.keys(this.products)[Object.keys(this.products).length - 1];
     }
 
     addProduct(title, description, price, thumbnail, stock, code) {
@@ -35,16 +35,27 @@ class ProductManager {
             return '';
         }
 
-        for (let i = 0; i < Object.keys(this.products).length; i = i + 1) {
-            if (Object.values(this.products).find((value) => this.products[i + 1]['code'] === code) !== undefined) {
-                console.log('El codigo no debe repetirse');
-                return '';
-            }
+        let ids = [];
+        let codes = [];
+        Object.entries(this.products).forEach((producto) => {
+            ids.push(producto[0]);
+            codes.push(producto[1]['code']);
+        });
+
+        let max = Math.max(...ids);
+
+        if (max == '-Infinity') {
+            max = 0;
+        }
+
+        if (codes.includes(code)) {
+            console.log('El codigo no debe repetirse');
+            return '';
         }
 
         let thisItem = {};
 
-        thisItem.id = this.currentId;
+        thisItem.id = max + 1;
         thisItem.title = title;
         thisItem.description = description;
         thisItem.price = price;
@@ -52,10 +63,10 @@ class ProductManager {
         thisItem.stock = stock;
         thisItem.code = code;
 
-        this.products[this.currentId] = thisItem;
+        this.products[thisItem.id] = thisItem;
 
         fs.writeFileSync(osPath.join(this.path, this.file), JSON.stringify(this.products, null, 2), 'utf-8', finished);
-        console.log(`Producto agregado satisfactoriamente con el id ${this.currentId}`);
+        console.log(`Producto agregado satisfactoriamente con el id ${thisItem.id}`);
     }
 
     getProducts() {
@@ -117,7 +128,7 @@ class ProductManager {
             return '';
         }
 
-        this.products[id] = {};
+        delete this.products[id];
 
         fs.writeFileSync(osPath.join(this.path, this.file), JSON.stringify(this.products, null, 2), 'utf-8', finished);
         console.log(`Producto ${id} eliminado satisfactoriamente`);
@@ -145,8 +156,8 @@ prueba.addProduct('producto prueba', 'Este es un producto prueba', 200, 'Sin ima
 /* PRUEBAS PARA OBTENER TODOS LOS PRODUCTOS, SOLO UNO, MODIFICARLO O ELIMINARLO */
 /* ------------------------------------------------------------------------------------------ */
 
-// const mis_productos = new ProductManager();
+const mis_productos = new ProductManager();
 // console.log(mis_productos.getProducts());
 // console.log(mis_productos.getProductById(1));
 // console.log(mis_productos.updateProduct(1, 'producto prueba', 'Este es un producto prueba editado', 210, 'Con imagen', 22, 'abc123'));
-// console.log(mis_productos.deleteProduct(1));
+// console.log(mis_productos.deleteProduct(3));
