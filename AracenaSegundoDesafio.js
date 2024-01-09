@@ -140,8 +140,8 @@ class ProductManager {
 /* PRUEBAS DE INSERCION */
 /* ------------------------------------------------------------------------------------------ */
 
-const prueba = new ProductManager();
-prueba.addProduct('producto prueba', 'Este es un producto prueba', 200, 'Sin imagen', 25, 'abc123');
+// const prueba = new ProductManager();
+// prueba.addProduct('producto prueba', 'Este es un producto prueba', 200, 'Sin imagen', 25, 'abc123');
 
 // const producto1 = new ProductManager();
 // producto1.addProduct('Manzana', 'Manzana Red Delicious del Valle', 99, 'manzana.jpg', 500, 'manzana-rd');
@@ -156,8 +156,19 @@ prueba.addProduct('producto prueba', 'Este es un producto prueba', 200, 'Sin ima
 /* PRUEBAS PARA OBTENER TODOS LOS PRODUCTOS, SOLO UNO, MODIFICARLO O ELIMINARLO */
 /* ------------------------------------------------------------------------------------------ */
 
-const mis_productos = new ProductManager();
+// const mis_productos = new ProductManager();
 // console.log(mis_productos.getProducts());
 // console.log(mis_productos.getProductById(1));
 // console.log(mis_productos.updateProduct(1, 'producto prueba', 'Este es un producto prueba editado', 210, 'Con imagen', 22, 'abc123'));
 // console.log(mis_productos.deleteProduct(3));
+
+const manager = new ProductManager();
+manager.addProduct('producto prueba', 'Este es un producto prueba', 200, 'Sin imagen', 25, 'abc123');
+manager.addProduct('Manzana', 'Manzana Red Delicious del Valle', 99, 'manzana.jpg', 500, 'manzana-rd');
+manager.addProduct('Pera', 'Pera Williams de temporada', 80, 'pera.jpg', 350, 'pera-wi');
+manager.addProduct('Banana', 'Banana Ecuatoriana', 85.5, 'bananas.jpg', 200, 'banana-ec');
+
+console.log(manager.getProducts());
+console.log(manager.getProductById(1));
+console.log(manager.updateProduct(1, 'producto prueba', 'Este es un producto prueba editado', 210, 'Con imagen', 22, 'abc123'));
+console.log(manager.deleteProduct(3));
